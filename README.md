@@ -149,14 +149,13 @@ most once per forward pair, and never for pairs behind an unreachable prefix.
 
 ## Layout
 
-    src/leastWeightSubsequence.ts        the algorithm
-    src/async.ts                         the async entry point
-    src/leastWeightSubsequence.test.ts   sync tests and a brute force oracle
-    src/async.test.ts                    async tests
-    src/testSupport.ts                   fixtures shared by both test files
-    scripts/generate-diagram.ts          regenerates docs/algorithm.svg
-    scripts/check-package.ts             packs and consumes the built tarball
-    docs/algorithm.svg                   the diagram above
+    src/main.ts                  the algorithm
+    src/async.ts                 the async entry point
+    src/main.test.ts             sync tests, shared fixtures, brute force oracle
+    src/async.test.ts            async tests
+    scripts/generate-diagram.ts  regenerates docs/algorithm.svg
+    scripts/check-package.ts     packs and consumes the built tarball
+    docs/algorithm.svg           the diagram above
 
 The oracle enumerates all `2^(n-2)` cuts. It is correct by construction and too
 slow beyond about 15 nodes. A property test cross-checks `leastWeightSubsequence`

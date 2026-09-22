@@ -1,12 +1,4 @@
 
-/** Thrown when no set of segments spans the sequence. */
-export class NoPathError extends Error {
-  constructor(from: NodeId, to: NodeId) {
-    super(`No sequence of segments spans ${from} to ${to}`);
-    this.name = 'NoPathError';
-  }
-}
-
 /**
  * Covers a sequence of nodes with the cheapest set of contiguous, non-overlapping
  * segments, where any pair `i < j` may be spanned by a single segment.
@@ -93,6 +85,15 @@ export function leastWeightSubsequence(
 
   return segments;
 }
+
+/** Thrown when no set of segments spans the sequence. */
+export class NoPathError extends Error {
+  constructor(from: NodeId, to: NodeId) {
+    super(`No sequence of segments spans ${from} to ${to}`);
+    this.name = 'NoPathError';
+  }
+}
+
 
 /** Identifies a node in the sequence. */
 export type NodeId = string;

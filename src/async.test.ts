@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { leastWeightSubsequence, NoPathError } from './leastWeightSubsequence.js';
+import { leastWeightSubsequence, NoPathError } from './main.js';
 import { leastWeightSubsequenceAsync } from './async.js';
 import type { AsyncGetWeight } from './async.js';
 import {
@@ -10,7 +10,7 @@ import {
   NRW_TO_LST_FARES,
   randomFares,
   type Weights,
-} from './testSupport.js';
+} from './main.test.js';
 
 describe('leastWeightSubsequenceAsync', () => {
   const asyncLookup =

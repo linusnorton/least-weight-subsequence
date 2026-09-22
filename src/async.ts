@@ -1,29 +1,5 @@
-import { NoPathError } from './leastWeightSubsequence.js';
-import type { NodeId, Segment } from './leastWeightSubsequence.js';
-
-export { NoPathError };
-export type { NodeId, Segment };
-
-/**
- * Lazy weight lookup that may return a promise. Resolve to `Infinity` when no
- * edge exists between the two nodes.
- *
- * Returning a plain number is allowed, so a lookup that is usually cached and
- * occasionally remote does not have to wrap every hit in a promise.
- */
-export type AsyncGetWeight = (
-  from: NodeId,
-  to: NodeId,
-) => number | PromiseLike<number>;
-
-export interface AsyncOptions {
-  /**
-   * Maximum number of `getWeight` calls in flight at once. Defaults to a whole
-   * row, which is up to `path.length - 1` concurrent calls. Set it when the
-   * lookup talks to something that will not enjoy 50 simultaneous requests.
-   */
-  concurrency?: number;
-}
+import { NoPathError } from './main.js';
+import type { NodeId, Segment } from './main.js';
 
 /**
  * Asynchronous form of `leastWeightSubsequence`, for weight lookups that hit the
@@ -111,4 +87,28 @@ export async function leastWeightSubsequenceAsync(
   }
 
   return segments;
+}
+
+export { NoPathError };
+export type { NodeId, Segment };
+
+/**
+ * Lazy weight lookup that may return a promise. Resolve to `Infinity` when no
+ * edge exists between the two nodes.
+ *
+ * Returning a plain number is allowed, so a lookup that is usually cached and
+ * occasionally remote does not have to wrap every hit in a promise.
+ */
+export type AsyncGetWeight = (
+  from: NodeId,
+  to: NodeId,
+) => number | PromiseLike<number>;
+
+export interface AsyncOptions {
+  /**
+   * Maximum number of `getWeight` calls in flight at once. Defaults to a whole
+   * row, which is up to `path.length - 1` concurrent calls. Set it when the
+   * lookup talks to something that will not enjoy 50 simultaneous requests.
+   */
+  concurrency?: number;
 }

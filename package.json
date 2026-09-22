@@ -12,12 +12,12 @@
   ],
   "license": "MIT",
   "type": "module",
-  "main": "./dist/leastWeightSubsequence.js",
-  "types": "./dist/leastWeightSubsequence.d.ts",
+  "main": "./dist/main.js",
+  "types": "./dist/main.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/leastWeightSubsequence.d.ts",
-      "default": "./dist/leastWeightSubsequence.js"
+      "types": "./dist/main.d.ts",
+      "default": "./dist/main.js"
     },
     "./async": {
       "types": "./dist/async.d.ts",

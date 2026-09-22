@@ -8,8 +8,8 @@
  * drift from the implementation it illustrates.
  */
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { leastWeightSubsequence } from '../src/leastWeightSubsequence.ts';
-import type { GetWeight, NodeId } from '../src/leastWeightSubsequence.ts';
+import { leastWeightSubsequence } from '../src/main.ts';
+import type { GetWeight, NodeId } from '../src/main.ts';
 
 const NODES: NodeId[] = ['A', 'B', 'C', 'D', 'E'];
 
