@@ -3,36 +3,18 @@ import { leastWeightSubsequence, NoPathError } from './main.js';
 import { leastWeightSubsequenceAsync } from './async.js';
 import type { AsyncGetWeight } from './async.js';
 import {
+  asyncLookup,
   lookup,
   makeRng,
   makeStops,
   NRW_TO_LST,
   NRW_TO_LST_FARES,
   randomFares,
+  tracked,
   type Weights,
-} from './main.test.js';
+} from '../test/helpers.js';
 
 describe('leastWeightSubsequenceAsync', () => {
-  const asyncLookup =
-    (weights: Weights): AsyncGetWeight =>
-    async (from, to) =>
-      weights[from]?.[to] ?? Infinity;
-
-  /** Wraps a matrix so the test can see call order and overlap. */
-  function tracked(weights: Weights, delayMs = 1) {
-    const calls: string[] = [];
-    let inFlight = 0;
-    let peak = 0;
-    const get: AsyncGetWeight = async (from, to) => {
-      calls.push(`${from}>${to}`);
-      inFlight++;
-      peak = Math.max(peak, inFlight);
-      await new Promise((resolve) => setTimeout(resolve, delayMs));
-      inFlight--;
-      return weights[from]?.[to] ?? Infinity;
-    };
-    return { get, calls, peak: () => peak };
-  }
 
   it('returns nothing for degenerate sequences', async () => {
     await expect(leastWeightSubsequenceAsync([], asyncLookup({}))).resolves.toEqual([]);

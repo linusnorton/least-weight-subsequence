@@ -151,8 +151,9 @@ most once per forward pair, and never for pairs behind an unreachable prefix.
 
     src/main.ts                  the algorithm
     src/async.ts                 the async entry point
-    src/main.test.ts             sync tests, shared fixtures, brute force oracle
+    src/main.test.ts             sync tests
     src/async.test.ts            async tests
+    test/helpers.ts              fixtures, adapters and the brute force oracle
     scripts/generate-diagram.ts  regenerates docs/algorithm.svg
     scripts/check-package.ts     packs and consumes the built tarball
     docs/algorithm.svg           the diagram above
