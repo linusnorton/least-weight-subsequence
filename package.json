@@ -1,0 +1,55 @@
+{
+  "name": "least-weight-subsequence",
+  "version": "1.0.0",
+  "description": "Cheapest way to cut a fixed sequence into contiguous segments. Shortest path over a complete DAG, without the Monge assumptions.",
+  "keywords": [
+    "least-weight-subsequence",
+    "dynamic-programming",
+    "shortest-path",
+    "dag",
+    "segmentation",
+    "sequence"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/leastWeightSubsequence.js",
+  "types": "./dist/leastWeightSubsequence.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/leastWeightSubsequence.d.ts",
+      "default": "./dist/leastWeightSubsequence.js"
+    },
+    "./async": {
+      "types": "./dist/async.d.ts",
+      "default": "./dist/async.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "diagram": "node scripts/generate-diagram.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.2",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/linusnorton/least-weight-subsequence.git"
+  },
+  "homepage": "https://github.com/linusnorton/least-weight-subsequence#readme",
+  "bugs": {
+    "url": "https://github.com/linusnorton/least-weight-subsequence/issues"
+  },
+  "author": "Linus Norton"
+}

@@ -1,0 +1,67 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Check whether the version was bumped
+        id: version
+        run: |
+          current=$(jq -r .version package.json)
+          previous=$(git show HEAD~1:package.json 2>/dev/null | jq -r .version 2>/dev/null || true)
+
+          echo "current=$current" >> "$GITHUB_OUTPUT"
+
+          if [ "$current" = "$previous" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Version is unchanged at $current. Nothing to release."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Version went from ${previous:-none} to $current."
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.version.outputs.changed == 'true'
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          cache: npm
+
+      - if: steps.version.outputs.changed == 'true'
+        run: npm ci
+
+      - if: steps.version.outputs.changed == 'true'
+        run: npm run typecheck
+
+      - if: steps.version.outputs.changed == 'true'
+        run: npm test
+
+      - if: steps.version.outputs.changed == 'true'
+        run: npm run build
+
+      - name: Publish to npm
+        if: steps.version.outputs.changed == 'true'
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Tag and create a GitHub release
+        if: steps.version.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.current }}
+        run: |
+          git tag "v$VERSION"
+          git push origin "v$VERSION"
+          gh release create "v$VERSION" --title "v$VERSION" --generate-notes
