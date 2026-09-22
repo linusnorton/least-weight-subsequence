@@ -49,3 +49,20 @@ jobs:
 
       - name: Fail if docs/algorithm.svg is stale
         run: git diff --exit-code -- docs/
+
+  package:
+    name: Published artifact
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      # Packs, installs the tarball into a scratch project and imports both
+      # entry points the way a dependant would.
+      - run: npm run check:package
